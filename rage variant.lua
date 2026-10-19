@@ -6,7 +6,7 @@ shared.glory = {
 
         ["Checks"] = {
             ["Visible"] = {
-                ["Enabled"] = true;
+                ["Enabled"] = false;
                 ["Type"] = "Normal" --[[ Normal / Muzzle { Normal = seen from your camera, Muzzle = your gun's muzzle can actually hit them and they're in range } ]];
             };
 
@@ -34,10 +34,15 @@ shared.glory = {
 
         ["Character"] = {
             ["Speed"] = "T";
-            ["Jump Power"] = "J";
+            ["Velocity Fly"] = "Z";
+            ["Jump Power"] = "Y";
             ["Wall Jump"] = "Y";
-            ["Inventory Sorter"] = "F2";
             ["Panic Ground"] = "X";
+            ["Desync"] = "B";
+        };
+
+        ["Other"] = {
+            ["Inventory Sorter"] = "F2";
         };
 
         ["Visuals"] = {
@@ -65,7 +70,7 @@ shared.glory = {
 
             ["Hit Location"] = {
                 ["Part"] = { "Head" } --[[ Any R15 Parts, aims at whichever listed part is nearest your cursor, Closest = every part ]];
-                ["Point"] = {true; 100} --[[ Enabled, Scale ( Percentage ) { Aims at the point on the chosen part nearest your cursor, 100 = across the entire part, 50 = around 50% of the center } ]];
+                ["Point"] = {true; 35} --[[ Enabled, Scale ( Percentage ) { Aims at the point on the chosen part nearest your cursor, 100 = across the entire part, 50 = around 50% of the center } ]];
             };
 
             ["Prediction"] = {
@@ -87,7 +92,7 @@ shared.glory = {
 
             ["Snappiness"] = {
                 ["Enabled"] = false;
-                ["Ramp"] = {false; 0.5} --[[ Enabled, Value ( seconds ) ]];
+                ["Ramp"] = {true; 0.5} --[[ Enabled, Value ( seconds ) ]];
 
                 ["Value"] = { --[[ 0 = Smooth, 1 = Blatant, vice versa ]]
                     ["X"] = 0.1;
@@ -95,7 +100,7 @@ shared.glory = {
                 };
 
                 ["Easing"] = {
-                    ["Style"] = "Linear" --[[ https://create.roblox.com/docs/reference/engine/enums/EasingStyle ]];
+                    ["Style"] = "Sine" --[[ https://create.roblox.com/docs/reference/engine/enums/EasingStyle ]];
                     ["Direction"] = "InOut" --[[ In / Out / InOut ]];
                 };
             };
@@ -132,13 +137,6 @@ shared.glory = {
             ["Hit Location"] = {
                 ["Part"] = { "Closest" } --[[ Any R15 Parts, aims at whichever listed part is nearest your cursor, Closest = every part ]];
                 ["Point"] = {true; 55} --[[ Enabled, Scale ( Percentage ) { Aims at the point on the chosen part nearest your cursor, 100 = across the entire part, 50 = around 50% of the center } ]];
-
-                ["Range Based"] = { --[[ Overrides Part by distance, Close parts within Distance studs, Far parts past it ]]
-                    ["Enabled"] = false;
-                    ["Distance"] = 75;
-                    ["Close"] = { "Head" };
-                    ["Far"] = { "UpperTorso", "HumanoidRootPart" };
-                };
             };
 
             ["Prediction"] = {
@@ -175,6 +173,7 @@ shared.glory = {
                 ["Targeting"] = "Target" --[[ Target / Automatic ]];
                 ["Activation"] = "Toggle" --[[ Hold / Toggle ]];
                 ["Fire When"] = "FOV" --[[ FOV / Crosshair ]];
+                ["Shoot Chance"] = 100 --[[ Percentage, a missed roll skips that shot ]];
             };
 
             ["Weapon Whitelist"] = {
@@ -209,7 +208,7 @@ shared.glory = {
     };
 
     ["Future"] = { --[[ Reduces fake bullets, recommend to keep on ]]
-        ["Enabled"] = true;
+        ["Enabled"] = false;
 
         ["Multiplier"] = { --[[ 1 = Calculated lead, 0 = No lead on that axis ]]
             ["X"] = 1;
@@ -225,6 +224,8 @@ shared.glory = {
             ["Weapons"] = { --[[ Min, Max { 1 = Normal Spread, 0 = No Spread } ]]
                 ["[Double-Barrel SG]"] = {0; 0};
                 ["[TacticalShotgun]"] = {0; 0};
+                ["[Shotgun]"] = {0; 0};
+                ["[Drum-Shotgun]"] = {0; 0};
             };
         };
 
@@ -239,7 +240,7 @@ shared.glory = {
         };
 
         ["Delay"] = {
-            ["Enabled"] = true;
+            ["Enabled"] = false;
 
             ["Weapons"] = { --[[ Percentage of normal delay { 100 = Normal, 50 = Half, 0 = No Delay } ]]
                 ["[Double-Barrel SG]"] = 0;
@@ -255,7 +256,7 @@ shared.glory = {
         };
 
         ["Auto Shoot"] = { -- [[ Self explanatory ]]
-            ["Enabled"] = true;
+            ["Enabled"] = false;
 
             ["Auto Reload"] = { --[[ Only reloads when your gun isn't already full ]]
                 ["Enabled"] = true;
@@ -286,19 +287,35 @@ shared.glory = {
             };
         };
 
-        ["Jump Power"] = {
-            ["Enabled"] = false;
+        ["Velocity Fly"] = {
+            ["Enabled"] = true;
 
             ["Settings"] = {
                 ["Activation"] = "Toggle" --[[ Hold / Toggle ]];
-                ["Mode"] = "Multiply" --[[ Multiply / Normal ]];
+                ["Lerp Speed"] = 12 --[[ How fast you speed up, higher = snappier ]];
+            };
+
+            ["Value"] = { --[[ How fast you fly in studs per second ]]
+                ["Normal"] = 1500;
+                ["Shooting"] = 1500;
+                ["Reloading"] = 1500;
+                ["Low Health"] = 1500;
+            };
+        };
+
+        ["Jump Power"] = {
+            ["Enabled"] = true;
+
+            ["Settings"] = {
+                ["Activation"] = "Toggle" --[[ Hold / Toggle ]];
+                ["Mode"] = "Normal" --[[ Multiply / Normal ]];
             };
 
             ["Value"] = { --[[ Multiply = times your normal jump ( 1 = Normal Jump ), Normal = your jump power is set to this value ]]
-                ["Normal"] = 1.5;
-                ["Shooting"] = 1.5;
-                ["Reloading"] = 1.5;
-                ["Low Health"] = 1.5;
+                ["Normal"] = 355;
+                ["Shooting"] = 355;
+                ["Reloading"] = 355;
+                ["Low Health"] = 355;
             };
         };
 
@@ -330,7 +347,7 @@ shared.glory = {
         };
 
         ["Panic Ground"] = { --[[ Teleports you down when you press the keybind ]]
-            ["Enabled"] = true;
+            ["Enabled"] = false;
             ["Stabilize"] = true --[[ So you don't bounce back up after teleporting down]];
         };
 
@@ -347,6 +364,26 @@ shared.glory = {
                 "[TacticalShotgun]";
                 "[Knife]";
                 "[Katana]" --[[ For void falls games]];
+            };
+        };
+
+        ["Desync"] = {
+            ["Enabled"] = false;
+            ["Activation"] = "Toggle" --[[ Hold / Toggle ]];
+            ["Method"] = "Standby" --[[ Standby / Multiply / Custom / Under / Over / Zero / Freeze / Slow Data ]];
+            ["Power"] = 5 --[[ Multiply, Under and Over only ]];
+            ["Health Cutoff"] = 7 --[[ Turns off while your health is at or below this ]];
+
+            ["Custom"] = { --[[ Custom only, the velocity the server sees ]]
+                ["X"] = 50;
+                ["Y"] = 50;
+                ["Z"] = 50;
+            };
+
+            ["Visualize"] = { --[[ Shows a dot where your velocity points ]]
+                ["Enabled"] = true;
+                ["Size"] = 30;
+                ["Color"] = Color3.fromRGB(255, 255, 255);
             };
         };
     };
